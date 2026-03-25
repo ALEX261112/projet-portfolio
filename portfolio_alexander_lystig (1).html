@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alexander LYSTIG — Portfolio BTS SIO SISR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#080c18;--bg2:#0c1120;--card:#111828;--accent:#00c6ff;--accent2:#0072ff;--green:#00e5a0;--yellow:#ffc107;--text:#e8eaf6;--muted:#7b8ab8;--border:rgba(0,198,255,.13);--r:14px;}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7;overflow-x:hidden;}
+    #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:999;transition:width .1s;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:.9rem 2.5rem;background:rgba(8,12,24,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.95rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .nav-links{display:flex;gap:1.4rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:500;transition:color .2s;}
+    .nav-links a:hover{color:var(--accent);}
+    section{padding:5.5rem 2rem;position:relative;z-index:1;}
+    .alt{background:var(--bg2);}
+    .wrap{max-width:1080px;margin:0 auto;}
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;overflow:hidden;position:relative;}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,198,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,198,255,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+    .hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,114,255,.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+    .badge{display:inline-block;background:rgba(0,198,255,.1);border:1px solid rgba(0,198,255,.3);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;padding:.35rem 1rem;border-radius:999px;margin-bottom:1.5rem;letter-spacing:.08em;}
+    .hero h1{font-size:clamp(3rem,8vw,5.5rem);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-bottom:.8rem;}
+    .hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hero-sub{font-size:1.1rem;color:var(--muted);max-width:520px;margin:0 auto 2.5rem;}
+    .ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .btn1{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:.8rem 2rem;border-radius:9px;font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity .2s,transform .2s;}
+    .btn1:hover{opacity:.85;transform:translateY(-2px);}
+    .btn2{background:transparent;color:var(--accent);border:1px solid rgba(0,198,255,.4);padding:.8rem 2rem;border-radius:9px;font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .2s;}
+    .btn2:hover{background:rgba(0,198,255,.08);transform:translateY(-2px);}
+    .lbl{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem;}
+    .ttl{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;letter-spacing:-.02em;margin-bottom:.9rem;}
+    .dsc{color:var(--muted);font-size:1rem;max-width:580px;margin-bottom:2.8rem;}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.75rem;transition:transform .2s,border-color .2s,box-shadow .2s;}
+    .card:hover{transform:translateY(-4px);border-color:rgba(0,198,255,.3);box-shadow:0 12px 40px rgba(0,114,255,.1);}
+    .card-a::before{content:'';display:block;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px 4px 0 0;margin:-1.75rem -1.75rem 1.25rem;}
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+    .g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;}
+    .g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;}
+    .tl{position:relative;padding-left:2rem;}
+    .tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),transparent);border-radius:2px;}
+    .tl-item{position:relative;margin-bottom:2rem;}
+    .tl-item::before{content:'';position:absolute;left:-2.35rem;top:.45rem;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(0,198,255,.5);}
+    .tl-y{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:.3rem;}
+    .tl-t{font-weight:700;font-size:1rem;margin-bottom:.2rem;}
+    .tl-d{color:var(--muted);font-size:.9rem;}
+    .sb-w{margin-bottom:1.1rem;}
+    .sb-h{display:flex;justify-content:space-between;margin-bottom:.4rem;font-size:.88rem;}
+    .sb-h span:last-child{color:var(--accent);font-weight:600;font-family:'JetBrains Mono',monospace;font-size:.78rem;}
+    .sb-bg{background:rgba(255,255,255,.05);border-radius:999px;height:7px;overflow:hidden;}
+    .sb-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width 1.2s cubic-bezier(.4,0,.2,1);width:0;}
+    .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.9rem;}
+    .tag{background:rgba(0,198,255,.08);border:1px solid rgba(0,198,255,.2);color:var(--accent);font-size:.7rem;font-weight:600;padding:.2rem .65rem;border-radius:5px;font-family:'JetBrains Mono',monospace;}
+    .tag-g{background:rgba(0,229,160,.08);border-color:rgba(0,229,160,.25);color:var(--green);}
+    .tag-y{background:rgba(255,193,7,.08);border-color:rgba(255,193,7,.25);color:var(--yellow);}
+    .mi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1.7rem;display:flex;gap:1.2rem;align-items:flex-start;margin-bottom:1rem;transition:border-color .2s,transform .2s;}
+    .mi:hover{border-color:rgba(0,198,255,.3);transform:translateX(4px);}
+    .mn{font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:700;color:var(--accent);background:rgba(0,198,255,.1);border:1px solid rgba(0,198,255,.2);padding:.3rem .6rem;border-radius:6px;flex-shrink:0;margin-top:.15rem;}
+    .mn.g{color:var(--green);background:rgba(0,229,160,.1);border-color:rgba(0,229,160,.2);}
+    .mi-c h3{font-weight:700;font-size:.97rem;margin-bottom:.25rem;}
+    .mi-c p{color:var(--muted);font-size:.88rem;}
+    .ph{border:2px dashed rgba(0,198,255,.2);border-radius:14px;padding:2.5rem;text-align:center;background:rgba(0,198,255,.03);}
+    .ph .phi{font-size:2.5rem;margin-bottom:.75rem;opacity:.5;}
+    .ph h3{font-weight:600;font-size:1rem;color:var(--muted);margin-bottom:.4rem;}
+    .ph p{color:var(--muted);font-size:.85rem;opacity:.7;}
+    .cc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.6rem;text-align:center;transition:border-color .2s,transform .2s;}
+    .cc:hover{border-color:var(--green);transform:translateY(-3px);}
+    .ci{font-size:2.5rem;margin-bottom:.7rem;}
+    .cn{font-weight:700;font-size:.97rem;margin-bottom:.2rem;}
+    .co{color:var(--muted);font-size:.82rem;}
+    .cs{display:inline-block;margin-top:.7rem;font-size:.7rem;font-weight:700;padding:.25rem .7rem;border-radius:999px;font-family:'JetBrains Mono',monospace;}
+    .s-ok{background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.3);color:var(--green);}
+    .s-wip{background:rgba(255,193,7,.1);border:1px solid rgba(255,193,7,.3);color:var(--yellow);}
+    .sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.2rem;margin-top:2.5rem;}
+    .sb{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem;text-align:center;}
+    .sb .num{font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .sb .lbl2{color:var(--muted);font-size:.8rem;margin-top:.2rem;}
+    .swot{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .sw{border-radius:12px;padding:1.4rem;}
+    .sw-s{background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.2);}
+    .sw-w{background:rgba(255,193,7,.07);border:1px solid rgba(255,193,7,.2);}
+    .sw-o{background:rgba(0,198,255,.07);border:1px solid rgba(0,198,255,.2);}
+    .sw-t{background:rgba(255,80,80,.07);border:1px solid rgba(255,80,80,.2);}
+    .sw-l{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem;}
+    .sw-s .sw-l{color:var(--green);}
+    .sw-w .sw-l{color:var(--yellow);}
+    .sw-o .sw-l{color:var(--accent);}
+    .sw-t .sw-l{color:#ff5050;}
+    .sw ul{list-style:none;}
+    .sw ul li{color:var(--muted);font-size:.86rem;padding:.18rem 0;}
+    .sw ul li::before{content:'› ';}
+    .cb{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:3rem;position:relative;overflow:hidden;}
+    .cb::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(0,198,255,.06),transparent 60%);}
+    .cg{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:2rem;}
+    .cbtn{display:flex;align-items:center;gap:.6rem;background:rgba(0,198,255,.07);border:1px solid rgba(0,198,255,.2);color:var(--text);text-decoration:none;padding:.75rem 1.5rem;border-radius:9px;font-weight:500;font-size:.9rem;transition:background .2s,transform .2s;}
+    .cbtn:hover{background:rgba(0,198,255,.15);transform:translateY(-2px);}
+    footer{text-align:center;padding:2.5rem;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem;}
+    footer strong{color:var(--accent);}
+    .fi{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+    .fi.vis{opacity:1;transform:translateY(0);}
+    @media(max-width:768px){.g2{grid-template-columns:1fr;}.swot{grid-template-columns:1fr;}nav{padding:.9rem 1.2rem;}.nav-links{gap:1rem;}.nav-links a{font-size:.75rem;}section{padding:4rem 1.25rem;}.cb{padding:2rem 1.5rem;}}
+    @media(max-width:500px){.nav-links{display:none;}}
+  </style>
+</head>
+<body>
+<div id="progress"></div>
+
+<nav>
+  <div class="nav-logo">&lt;alexander.dev /&gt;</div>
+  <ul class="nav-links">
+    <li><a href="#parcours">Parcours</a></li>
+    <li><a href="#competences">Compétences</a></li>
+    <li><a href="#entreprise">Entreprise</a></li>
+    <li><a href="#missions">Missions</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="badge">🎓 BTS SIO SISR — Portfolio Épreuve E5</div>
+    <h1>Alexander<br/><span>LYSTIG</span></h1>
+    <p class="hero-sub">Administration Systèmes &amp; Réseaux · Cybersécurité · Virtualisation</p>
+    <div class="ctas">
+      <a href="#parcours" class="btn1">Mon parcours</a>
+      <a href="#competences" class="btn2">Mes compétences</a>
+    </div>
+  </div>
+</section>
+
+<!-- 1. PARCOURS -->
+<section id="parcours">
+  <div class="wrap fi">
+    <p class="lbl">// 01 — Parcours</p>
+    <h2 class="ttl">Mon parcours scolaire &amp; personnel</h2>
+    <p class="dsc">De la découverte de l'informatique à la spécialisation en systèmes &amp; réseaux.</p>
+    <div class="g2" style="gap:3rem;align-items:start;">
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-y">2024 — Aujourd'hui</div>
+          <div class="tl-t">BTS SIO option SISR</div>
+          <div class="tl-d">Spécialisation Administration Systèmes &amp; Réseaux. Configuration réseau, administration Linux/Windows et virtualisation.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-y">2024</div>
+          <div class="tl-t">Obtention du Baccalauréat</div>
+          <div class="tl-d">Diplôme obtenu, orientant le choix vers une formation technique en informatique.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-y">Motivations</div>
+          <div class="tl-t">Pourquoi le BTS SIO SISR ?</div>
+          <div class="tl-d">Passion pour les réseaux, les systèmes Linux et la cybersécurité. Formation idéale pour acquérir des compétences directement applicables en entreprise.</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.5rem;">
+        <div class="card card-a">
+          <h3 style="margin-bottom:1rem;font-size:1rem;">📋 Informations personnelles</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:.55rem;">
+            <li style="display:flex;gap:.75rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--accent);width:1.2rem;">📍</span>47 avenue Victor Cresson, 92130 Issy-les-Moulineaux</li>
+            <li style="display:flex;gap:.75rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--accent);width:1.2rem;">📞</span><a href="tel:0695842771" style="color:var(--accent);text-decoration:none;">06.95.84.27.71</a></li>
+            <li style="display:flex;gap:.75rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--accent);width:1.2rem;">✉️</span><a href="mailto:alexanderlystig@gmail.com" style="color:var(--accent);text-decoration:none;">alexanderlystig@gmail.com</a></li>
+            <li style="display:flex;gap:.75rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--accent);width:1.2rem;">🇫🇷</span>Français (langue maternelle)</li>
+            <li style="display:flex;gap:.75rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--accent);width:1.2rem;">🇬🇧</span>Anglais — niveau intermédiaire</li>
+          </ul>
+        </div>
+        <div class="card card-a">
+          <h3 style="margin-bottom:1rem;font-size:1rem;">🎯 Centres d'intérêt</h3>
+          <div class="g2" style="gap:.8rem;">
+            <div style="background:rgba(0,198,255,.06);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;"><div style="font-size:1.8rem;margin-bottom:.4rem;">🛡️</div><div style="font-weight:600;font-size:.88rem;">Cybersécurité</div><div style="color:var(--muted);font-size:.78rem;">Protection des systèmes</div></div>
+            <div style="background:rgba(0,198,255,.06);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;"><div style="font-size:1.8rem;margin-bottom:.4rem;">📡</div><div style="font-weight:600;font-size:.88rem;">Veille techno</div><div style="color:var(--muted);font-size:.78rem;">Réseaux, Linux</div></div>
+            <div style="background:rgba(0,198,255,.06);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;"><div style="font-size:1.8rem;margin-bottom:.4rem;">🏀</div><div style="font-weight:600;font-size:.88rem;">Basket-ball</div><div style="color:var(--muted);font-size:.78rem;">Esprit d'équipe</div></div>
+            <div style="background:rgba(0,198,255,.06);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;"><div style="font-size:1.8rem;margin-bottom:.4rem;">🏋️</div><div style="font-weight:600;font-size:.88rem;">Musculation</div><div style="color:var(--muted);font-size:.78rem;">Discipline</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sr">
+      <div class="sb"><div class="num">BTS</div><div class="lbl2">SIO SISR en cours</div></div>
+      <div class="sb"><div class="num">2</div><div class="lbl2">Certifications</div></div>
+      <div class="sb"><div class="num">4</div><div class="lbl2">Domaines maîtrisés</div></div>
+      <div class="sb"><div class="num">5+</div><div class="lbl2">Projets réalisés</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. COMPÉTENCES -->
+<section id="competences" class="alt">
+  <div class="wrap fi">
+    <p class="lbl">// 02 — Compétences</p>
+    <h2 class="ttl">Compétences techniques acquises</h2>
+    <p class="dsc">Compétences développées en formation, confirmées par des certifications.</p>
+    <div class="g2" style="gap:2.5rem;margin-bottom:3rem;">
+      <div class="card card-a">
+        <h3 style="margin-bottom:1.5rem;font-size:1rem;">📊 Niveau par domaine</h3>
+        <div class="sb-w"><div class="sb-h"><span>🌐 Réseaux TCP/IP / VLAN</span><span>75%</span></div><div class="sb-bg"><div class="sb-fill" data-w="75"></div></div></div>
+        <div class="sb-w"><div class="sb-h"><span>🐧 Linux (Debian)</span><span>70%</span></div><div class="sb-bg"><div class="sb-fill" data-w="70"></div></div></div>
+        <div class="sb-w"><div class="sb-h"><span>🖥️ Windows Server</span><span>65%</span></div><div class="sb-bg"><div class="sb-fill" data-w="65"></div></div></div>
+        <div class="sb-w"><div class="sb-h"><span>⚙️ VMware / Virtualisation</span><span>68%</span></div><div class="sb-bg"><div class="sb-fill" data-w="68"></div></div></div>
+        <div class="sb-w"><div class="sb-h"><span>🔐 Cybersécurité / SSH</span><span>60%</span></div><div class="sb-bg"><div class="sb-fill" data-w="60"></div></div></div>
+        <div class="sb-w" style="margin-bottom:0;"><div class="sb-h"><span>🇬🇧 Anglais technique</span><span>50%</span></div><div class="sb-bg"><div class="sb-fill" data-w="50"></div></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.1rem;">
+        <div class="card"><div style="display:flex;gap:.75rem;align-items:center;margin-bottom:.6rem;"><span style="font-size:1.4rem;">🌐</span><strong>Réseaux</strong></div><p style="color:var(--muted);font-size:.87rem;">Configuration et administration d'architectures réseau professionnelles.</p><div class="tags"><span class="tag">TCP/IP</span><span class="tag">IPv4</span><span class="tag">VLAN</span><span class="tag">OSI</span><span class="tag">Switches</span></div></div>
+        <div class="card"><div style="display:flex;gap:.75rem;align-items:center;margin-bottom:.6rem;"><span style="font-size:1.4rem;">🖥️</span><strong>Systèmes</strong></div><p style="color:var(--muted);font-size:.87rem;">Installation et administration de serveurs Windows et Linux.</p><div class="tags"><span class="tag">Windows Server</span><span class="tag">Debian</span><span class="tag">CLI</span><span class="tag">Shell</span></div></div>
+        <div class="card"><div style="display:flex;gap:.75rem;align-items:center;margin-bottom:.6rem;"><span style="font-size:1.4rem;">🔐</span><strong>Sécurité &amp; Virtualisation</strong></div><p style="color:var(--muted);font-size:.87rem;">Sécurisation des accès et gestion des environnements virtuels.</p><div class="tags"><span class="tag">SSH</span><span class="tag">VMware</span><span class="tag">Firewall</span></div></div>
+      </div>
+    </div>
+    <h3 style="font-weight:700;margin-bottom:1.5rem;font-size:1.1rem;">🏆 Certifications</h3>
+    <div class="g3">
+      <div class="cc"><div class="ci">🐧</div><div class="cn">Linux Unhatched</div><div class="co">Cisco Networking Academy</div><div class="cs s-ok">✓ OBTENU</div></div>
+      <div class="cc"><div class="ci">💡</div><div class="cn">Tech For All</div><div class="co">Programme Tech For All</div><div class="cs s-ok">✓ OBTENU</div></div>
+      <div class="cc"><div class="ci">🎓</div><div class="cn">BTS SIO SISR</div><div class="co">Formation nationale</div><div class="cs s-wip">⏳ EN COURS</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. ENTREPRISE -->
+<section id="entreprise">
+  <div class="wrap fi">
+    <p class="lbl">// 03 — Entreprise d'accueil</p>
+    <h2 class="ttl">Entreprise(s) de stage</h2>
+    <p class="dsc">Identification, historique, RGPD, orientations stratégiques, RSE et analyse SWOT.</p>
+    <div class="ph" style="margin-bottom:2rem;">
+      <div class="phi">🏢</div>
+      <h3>Section à compléter lors du stage</h3>
+      <p>Les informations sur l'entreprise d'accueil seront renseignées dès le début du stage.</p>
+    </div>
+    <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+      <div class="card card-a">
+        <h3 style="font-size:.95rem;margin-bottom:1rem;color:var(--accent);">🏷️ Identification</h3>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:.5rem;">
+          <li style="display:flex;justify-content:space-between;font-size:.87rem;"><span style="color:var(--muted);">Dénomination</span><span style="font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);">— À compléter —</span></li>
+          <li style="display:flex;justify-content:space-between;font-size:.87rem;"><span style="color:var(--muted);">Adresse</span><span style="font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);">— À compléter —</span></li>
+          <li style="display:flex;justify-content:space-between;font-size:.87rem;"><span style="color:var(--muted);">Forme juridique</span><span style="font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);">— À compléter —</span></li>
+          <li style="display:flex;justify-content:space-between;font-size:.87rem;"><span style="color:var(--muted);">Taille / Effectif</span><span style="font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);">— À compléter —</span></li>
+          <li style="display:flex;justify-content:space-between;font-size:.87rem;"><span style="color:var(--muted);">Secteur d'activité</span><span style="font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);">— À compléter —</span></li>
+        </ul>
+      </div>
+      <div class="card card-a">
+        <h3 style="font-size:.95rem;margin-bottom:1rem;color:var(--accent);">📜 Historique &amp; Contexte</h3>
+        <p style="color:var(--muted);font-size:.87rem;margin-bottom:.75rem;">Résumé de l'historique de l'entreprise.</p>
+        <div style="background:rgba(0,198,255,.05);border:1px dashed rgba(0,198,255,.2);border-radius:8px;padding:.9rem;color:var(--muted);font-size:.82rem;font-style:italic;">À compléter avec les informations de l'entreprise d'accueil.</div>
+      </div>
+    </div>
+    <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+      <div class="card card-a">
+        <h3 style="font-size:.95rem;margin-bottom:1rem;color:var(--accent);">🔒 RGPD</h3>
+        <p style="color:var(--muted);font-size:.87rem;">Comment l'entreprise gère-t-elle les données personnelles ? (DPO, politiques internes, traitements…)</p>
+        <div style="background:rgba(0,198,255,.05);border:1px dashed rgba(0,198,255,.2);border-radius:8px;padding:.9rem;margin-top:.75rem;color:var(--muted);font-size:.82rem;font-style:italic;">À compléter.</div>
+      </div>
+      <div class="card card-a">
+        <h3 style="font-size:.95rem;margin-bottom:1rem;color:var(--accent);">♻️ RSE</h3>
+        <p style="color:var(--muted);font-size:.87rem;">Actions environnementales, sociales et de gouvernance de l'entreprise.</p>
+        <div style="background:rgba(0,198,255,.05);border:1px dashed rgba(0,198,255,.2);border-radius:8px;padding:.9rem;margin-top:.75rem;color:var(--muted);font-size:.82rem;font-style:italic;">À compléter.</div>
+      </div>
+    </div>
+    <div class="card card-a" style="margin-bottom:1.5rem;">
+      <h3 style="font-size:.95rem;margin-bottom:1.2rem;color:var(--accent);">📊 Analyse SWOT</h3>
+      <div class="swot">
+        <div class="sw sw-s"><div class="sw-l">💪 Forces</div><ul><li>À compléter</li><li>À compléter</li></ul></div>
+        <div class="sw sw-w"><div class="sw-l">⚠️ Faiblesses</div><ul><li>À compléter</li><li>À compléter</li></ul></div>
+        <div class="sw sw-o"><div class="sw-l">🚀 Opportunités</div><ul><li>À compléter</li><li>À compléter</li></ul></div>
+        <div class="sw sw-t"><div class="sw-l">🚨 Menaces</div><ul><li>À compléter</li><li>À compléter</li></ul></div>
+      </div>
+    </div>
+    <div class="card card-a">
+      <h3 style="font-size:.95rem;margin-bottom:.8rem;color:var(--accent);">🎯 Orientations stratégiques</h3>
+      <p style="color:var(--muted);font-size:.87rem;">Vision, objectifs à moyen/long terme et positionnement sur le marché.</p>
+      <div style="background:rgba(0,198,255,.05);border:1px dashed rgba(0,198,255,.2);border-radius:8px;padding:.9rem;margin-top:.75rem;color:var(--muted);font-size:.82rem;font-style:italic;">À compléter.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. MISSIONS -->
+<section id="missions" class="alt">
+  <div class="wrap fi">
+    <p class="lbl">// 04 — Missions techniques</p>
+    <h2 class="ttl">Missions réalisées</h2>
+    <p class="dsc">Tâches effectuées en formation et en stage : objectifs, moyens, résultats et auto-critique.</p>
+    <h3 style="font-weight:700;margin-bottom:1.2rem;font-size:1.1rem;">📚 Missions en formation</h3>
+    <div style="margin-bottom:2.5rem;">
+      <div class="mi"><div class="mn g">F1</div><div class="mi-c"><h3>Réseau local sécurisé (IP + VLAN)</h3><p><strong style="color:var(--text);">Objectif :</strong> Concevoir un réseau local segmenté.<br/><strong style="color:var(--text);">Moyens :</strong> Switches Cisco, Packet Tracer, adressage IPv4.<br/><strong style="color:var(--text);">Résultat :</strong> Infrastructure opérationnelle avec isolation des VLANs.<br/><strong style="color:var(--text);">Auto-critique :</strong> Bonne compréhension du routage inter-VLAN, à améliorer sur la redondance.</p></div></div>
+      <div class="mi"><div class="mn g">F2</div><div class="mi-c"><h3>Déploiement serveurs Windows Server &amp; Debian</h3><p><strong style="color:var(--text);">Objectif :</strong> Installer et configurer des serveurs.<br/><strong style="color:var(--text);">Moyens :</strong> VMware, ISO Windows Server, Debian 12.<br/><strong style="color:var(--text);">Résultat :</strong> Serveurs opérationnels (DNS, DHCP configurés).<br/><strong style="color:var(--text);">Auto-critique :</strong> Efficace sur Linux, montée en compétence nécessaire sur Active Directory.</p></div></div>
+      <div class="mi"><div class="mn g">F3</div><div class="mi-c"><h3>Sécurisation des accès SSH</h3><p><strong style="color:var(--text);">Objectif :</strong> Durcir les accès distants sur un serveur Linux.<br/><strong style="color:var(--text);">Moyens :</strong> OpenSSH, paires de clés RSA, iptables.<br/><strong style="color:var(--text);">Résultat :</strong> Connexion par clé uniquement, root désactivé, pare-feu configuré.<br/><strong style="color:var(--text);">Auto-critique :</strong> Résultat satisfaisant, à approfondir avec fail2ban et monitoring.</p></div></div>
+      <div class="mi"><div class="mn g">F4</div><div class="mi-c"><h3>Environnements virtualisés VMware</h3><p><strong style="color:var(--text);">Objectif :</strong> Créer et gérer des VMs pour les TPs.<br/><strong style="color:var(--text);">Moyens :</strong> VMware Workstation Pro.<br/><strong style="color:var(--text);">Résultat :</strong> Lab virtuel fonctionnel (clonage, snapshots, réseaux NAT/host-only).<br/><strong style="color:var(--text);">Auto-critique :</strong> Bonne maîtrise de la virtualisation de base.</p></div></div>
+    </div>
+    <h3 style="font-weight:700;margin-bottom:1.2rem;font-size:1.1rem;">🏢 Missions en entreprise</h3>
+    <div class="ph">
+      <div class="phi">⏳</div>
+      <h3>À compléter lors du stage</h3>
+      <p>Les missions effectuées en entreprise seront détaillées ici avec objectifs, moyens utilisés, résultats et auto-critique.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. PROJETS -->
+<section id="projets">
+  <div class="wrap fi">
+    <p class="lbl">// 05 — Projets techniques</p>
+    <h2 class="ttl">Projets académiques &amp; personnels</h2>
+    <p class="dsc">Réalisations concrètes illustrant mes compétences techniques.</p>
+    <div class="mi"><div class="mn">P1</div><div class="mi-c"><h3>Infrastructure réseau simulée</h3><p>Réseau d'entreprise complet sous Packet Tracer : routeurs, switches, VLAN, DHCP, DNS.</p><div class="tags" style="margin-top:.6rem;"><span class="tag">Packet Tracer</span><span class="tag">VLAN</span><span class="tag">DHCP</span><span class="tag">DNS</span></div></div></div>
+    <div class="mi"><div class="mn">P2</div><div class="mi-c"><h3>Serveur web sécurisé sous Debian</h3><p>Déploiement Apache sous Debian avec HTTPS, pare-feu et accès SSH sécurisé.</p><div class="tags" style="margin-top:.6rem;"><span class="tag">Debian</span><span class="tag">Apache</span><span class="tag">HTTPS</span><span class="tag">UFW</span></div></div></div>
+    <div class="mi"><div class="mn">P3</div><div class="mi-c"><h3>Lab de cybersécurité (VMware)</h3><p>Environnement isolé sous VMware pour pratiquer des scénarios de sécurité réseau.</p><div class="tags" style="margin-top:.6rem;"><span class="tag">VMware</span><span class="tag">Kali Linux</span><span class="tag">Wireshark</span></div></div></div>
+    <div class="card card-a" style="margin-top:2rem;">
+      <h3 style="font-size:.95rem;margin-bottom:1rem;color:var(--accent);">📎 Documents à joindre</h3>
+      <div class="g2" style="gap:1rem;">
+        <div style="display:flex;align-items:center;gap:.75rem;background:rgba(0,198,255,.05);border:1px solid var(--border);border-radius:9px;padding:1rem;"><span style="font-size:1.5rem;">📊</span><div><div style="font-weight:600;font-size:.9rem;">Tableau de synthèse</div><div style="color:var(--muted);font-size:.8rem;">Format PDF — à joindre</div></div><span class="tag tag-y" style="margin-left:auto;">PDF</span></div>
+        <div style="display:flex;align-items:center;gap:.75rem;background:rgba(0,198,255,.05);border:1px solid var(--border);border-radius:9px;padding:1rem;"><span style="font-size:1.5rem;">📄</span><div><div style="font-weight:600;font-size:.9rem;">Curriculum Vitae</div><div style="color:var(--muted);font-size:.8rem;">Format PDF — à joindre</div></div><span class="tag tag-y" style="margin-left:auto;">PDF</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. CONCLUSION -->
+<section id="conclusion" class="alt">
+  <div class="wrap fi">
+    <p class="lbl">// 06 — Conclusion</p>
+    <h2 class="ttl">Bilan &amp; projet d'avenir</h2>
+    <div class="cb">
+      <div style="position:relative;z-index:1;">
+        <div class="g2" style="gap:2.5rem;align-items:start;">
+          <div>
+            <h3 style="font-weight:700;font-size:1.1rem;margin-bottom:1rem;color:var(--accent);">✅ Compétences acquises</h3>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:.5rem;">
+              <li style="display:flex;gap:.6rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--green);">✓</span>Administration Linux et Windows Server</li>
+              <li style="display:flex;gap:.6rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--green);">✓</span>Configuration réseau (VLAN, TCP/IP, routage)</li>
+              <li style="display:flex;gap:.6rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--green);">✓</span>Virtualisation avec VMware</li>
+              <li style="display:flex;gap:.6rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--green);">✓</span>Sécurisation des accès (SSH, pare-feu)</li>
+              <li style="display:flex;gap:.6rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--green);">✓</span>Bonnes pratiques de cybersécurité</li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="font-weight:700;font-size:1.1rem;margin-bottom:1rem;color:var(--accent);">🚀 Projet d'avenir</h3>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:.5rem;">
+              <li style="display:flex;gap:.6rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--accent);">›</span>Me spécialiser en cybersécurité</li>
+              <li style="display:flex;gap:.6rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--accent);">›</span>Poursuivre en Bachelor / Licence Pro</li>
+              <li style="display:flex;gap:.6rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--accent);">›</span>Viser administrateur systèmes &amp; réseaux</li>
+              <li style="display:flex;gap:.6rem;color:var(--muted);font-size:.9rem;"><span style="color:var(--accent);">›</span>Contribuer à la sécurisation d'infrastructures</li>
+            </ul>
+            <div style="margin-top:1.25rem;background:rgba(0,198,255,.07);border:1px solid rgba(0,198,255,.2);border-radius:10px;padding:1rem;">
+              <p style="font-style:italic;color:var(--muted);font-size:.88rem;">"La cybersécurité est un défi permanent — c'est précisément ce qui la rend passionnante."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:3rem;">
+      <p class="lbl">// Contact</p>
+      <h3 style="font-size:1.4rem;font-weight:700;margin-bottom:.75rem;">Me contacter</h3>
+      <div class="cg">
+        <a href="mailto:alexanderlystig@gmail.com" class="cbtn"><span>✉️</span>alexanderlystig@gmail.com</a>
+        <a href="tel:0695842771" class="cbtn"><span>📞</span>06.95.84.27.71</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Portfolio E5 — <strong>Alexander LYSTIG</strong> · BTS SIO SISR · 2025</p>
+  <p style="margin-top:.3rem;font-size:.75rem;opacity:.4;">Issy-les-Moulineaux, Île-de-France</p>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{const s=document.documentElement;document.getElementById('progress').style.width=(s.scrollTop/(s.scrollHeight-s.clientHeight)*100)+'%';});
+  const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:.1});
+  document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+  const bobs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.querySelectorAll('.sb-fill').forEach(b=>{b.style.width=b.dataset.w+'%';});});},{threshold:.3});
+  document.querySelectorAll('.card').forEach(c=>bobs.observe(c));
+</script>
+</body>
+</html>
